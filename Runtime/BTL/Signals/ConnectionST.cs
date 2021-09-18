@@ -14,7 +14,7 @@ namespace BTL
         private int m_lockCount = 0;
 
         public bool IsLocked => m_lockCount > 0;
-        public bool IsConnected => m_node == null;
+        public bool IsConnected => m_node != null;
         public bool IsFlaggedForRemoval => m_callable == null;
 
         public object GetCallable() => m_callable;
