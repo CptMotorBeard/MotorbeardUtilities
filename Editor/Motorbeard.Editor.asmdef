@@ -1,0 +1,16 @@
+{
+    "name": "Motorbeard.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:93a7ff063dcaa504e8005842d6e15eca"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
