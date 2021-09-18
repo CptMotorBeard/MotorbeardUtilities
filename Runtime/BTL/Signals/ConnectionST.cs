@@ -60,11 +60,26 @@ namespace BTL
             m_signal = signal ?? throw new ArgumentNullException($"{nameof(signal)} cannot be null");
             m_node = node ?? throw new ArgumentNullException($"{nameof(node)} cannot be null");
             m_callable = callable ?? throw new ArgumentNullException($"{nameof(callable)} cannot be null");
+
+#if DEBUG
+            m_creationStacktrace = Environment.StackTrace;
+#endif
         }
 
         ~ConnectionST()
         {
-            Assert.IsFalse(IsConnected, "GameEventConnection garbage collected but still connected!");
+            if (IsConnected)
+            {
+                string assertMessage = "ConnectionST garbage collected but still connected!";
+#if DEBUG
+                assertMessage += $" Stacktrace on creation: \n{m_creationStacktrace}";
+#endif
+                Assert.Fail(assertMessage);
+            }
         }
+
+#if DEBUG
+        private string m_creationStacktrace;
+#endif
     }
 }

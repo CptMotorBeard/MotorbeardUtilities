@@ -106,7 +106,7 @@ namespace MotorbeardUtilities
                 logMessage = $"{userMessage}\n{message}";
             }
 
-            DebugLogger.LogAssertion(message);
+            DebugLogger.LogAssertion(logMessage);
         }
 
         private static class AssertionMessageUtil
