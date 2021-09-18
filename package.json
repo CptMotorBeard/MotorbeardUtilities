@@ -1,7 +1,7 @@
 {
-    "name": "com.Motorbeard.UtilitiesPackage",
+    "name": "com.motorbeard.utilities",
     "version": "0.0.1",
-    "displayName": "Motorbeard.UtilitiesPackage",
+    "displayName": "Motorbeard Utilities Package",
     "description": "The Motorbeard utilities package",
     "unity" : "2019.4"
 }
