@@ -32,7 +32,7 @@ namespace MotorbeardUtilities
 
         public static void IsFalse(in bool condition, in string userMessage)
         {
-            if (!condition)
+            if (condition)
             {
                 Fail(AssertionMessageUtil.BooleanFailureMessage(expected: false), userMessage);
             }
