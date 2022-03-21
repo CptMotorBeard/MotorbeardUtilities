@@ -14,7 +14,7 @@ namespace MotorbeardUtilities
 
             GameEvent e = target as GameEvent;
             if (GUILayout.Button("Emit Event"))
-                e.Emit();
+                e.Dispatch();
         }
     }
 }

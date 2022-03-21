@@ -9,7 +9,7 @@ namespace MotorbeardUtilities
         [SerializeField] private List<IGameEventOneParam<T>> m_events = new List<IGameEventOneParam<T>>();
         [SerializeField] private UnityEvent<T> m_response = null;
 
-        private List<BTL.ConnectionST> m_connections = new List<BTL.ConnectionST>();
+        private List<GameEventConnection> m_connections = new List<GameEventConnection>();
 
         public bool IsRegistered => m_connections.Count > 0;
 

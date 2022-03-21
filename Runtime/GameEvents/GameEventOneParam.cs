@@ -6,19 +6,14 @@ namespace MotorbeardUtilities
     {
         [SerializeField] private bool m_logEventsToConsole = true;
 
-        private BTL.SignalST<T> m_signal = null;
-
-        public override BTL.SignalST<T> Signal => m_signal ??= new BTL.SignalST<T>();
-        public override bool HasConnections => m_signal.HasConnections();
-
-        public override void Emit(T arg)
+        public override void Dispatch(T data)
         {
             if (m_logEventsToConsole)
             {
-                DebugLogger.Log($"Event {name} dispatching with arg {arg}");
+                DebugLogger.Log($"Event {name} dispatching");
             }
 
-            Signal.Emit(arg);
+            base.Dispatch(data);
         }
     }
 }
