@@ -1,4 +1,4 @@
-﻿namespace MotorbeardUtilities
+﻿namespace BeardKit
 {
-    public class GameEventDoubleListener : GameEventListenerOneParam<double> { }
+    public class GameEventDoubleListener : GameEventListenerT<double> { }
 }

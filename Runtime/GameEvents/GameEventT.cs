@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
-    public class GameEventOneParam<T> : IGameEventOneParam<T>
+    public class GameEventT<T> : IGameEventT<T>
     {
         [SerializeField] private bool m_logEventsToConsole = true;
 

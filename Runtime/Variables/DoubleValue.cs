@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
-    [CreateAssetMenu(fileName = "DoubleValue", menuName = "MotorbeardUtilities/Variables/DoubleValue")]
+    [CreateAssetMenu(fileName = "DoubleValue", menuName = "BeardKit/Variables/DoubleValue")]
     public class DoubleValue : IValue<double> { }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
-    [CreateAssetMenu(fileName = "GameObjectValue", menuName = "MotorbeardUtilities/Variables/GameObjectValue")]
+    [CreateAssetMenu(fileName = "GameObjectValue", menuName = "BeardKit/Variables/GameObjectValue")]
     public class GameObjectValue : IValue<GameObject> { }
 }

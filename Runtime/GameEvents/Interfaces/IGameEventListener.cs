@@ -1,4 +1,4 @@
-namespace MotorbeardUtilities
+namespace BeardKit
 {
     public interface IGameEventListener
     {

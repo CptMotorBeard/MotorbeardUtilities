@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
     [Serializable]
     public class SceneObjectReference

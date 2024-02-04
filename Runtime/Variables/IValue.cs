@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
-    public abstract class IValue<T> : ScriptableObject
+    public abstract class IValue<T> : NonPersistentScriptableObject
     {
         [field: SerializeField] public T Value { get; set; }
 

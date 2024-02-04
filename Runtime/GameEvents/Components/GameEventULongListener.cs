@@ -1,4 +1,4 @@
-﻿namespace MotorbeardUtilities
+﻿namespace BeardKit
 {
-    public class GameEventULongListener : GameEventListenerOneParam<ulong> { }
+    public class GameEventULongListener : GameEventListenerT<ulong> { }
 }

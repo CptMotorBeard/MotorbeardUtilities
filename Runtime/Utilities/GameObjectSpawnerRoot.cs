@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
     public class GameObjectSpawnerRoot : MonoBehaviour
     {

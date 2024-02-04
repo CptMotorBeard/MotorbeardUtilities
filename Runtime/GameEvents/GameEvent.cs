@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
-    [CreateAssetMenu(fileName = "GameEvent", menuName = "MotorbeardUtilities/Events/GameEvent")]
+    [CreateAssetMenu(fileName = "GameEvent", menuName = "BeardKit/Events/GameEvent")]
     public class GameEvent : IGameEvent
     {
         [SerializeField] private bool m_logEventsToConsole = true;

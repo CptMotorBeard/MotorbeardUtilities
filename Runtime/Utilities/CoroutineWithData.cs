@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
     public class CoroutineWithData<T>
     {
@@ -29,8 +29,8 @@ namespace MotorbeardUtilities
 
 public static class MonoBehaviourCoroutineWithDataExtensions
 {
-    public static MotorbeardUtilities.CoroutineWithData<T> StartCoroutineWithData<T>(this MonoBehaviour owner, IEnumerator target)
+    public static BeardKit.CoroutineWithData<T> StartCoroutineWithData<T>(this MonoBehaviour owner, IEnumerator target)
     {
-        return new MotorbeardUtilities.CoroutineWithData<T>(owner, target);
+        return new BeardKit.CoroutineWithData<T>(owner, target);
     }
 }

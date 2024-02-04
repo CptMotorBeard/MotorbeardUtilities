@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
     public class GameEventListener : MonoBehaviour, IGameEventListener
     {

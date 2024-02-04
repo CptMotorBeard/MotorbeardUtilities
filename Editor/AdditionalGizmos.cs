@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
     /// <summary>A collection of Editor only Gizmos</summary>
     public static class AdditionalGizmos

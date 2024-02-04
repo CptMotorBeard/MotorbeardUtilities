@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
     public class GameEventConnection
     {

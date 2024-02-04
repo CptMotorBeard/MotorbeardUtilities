@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BTL
+namespace BeardKit
 {
     public interface IError
     {

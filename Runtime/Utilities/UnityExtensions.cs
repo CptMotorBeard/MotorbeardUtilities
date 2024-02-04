@@ -14,7 +14,7 @@ public static class TransformExtensions
 
 public static class CollectionExtensions
 {
-    public static void DestroyAllGameObjectsAndClear<T>(this List<T> list) where T : MonoBehaviour
+    public static void DestroyAllGameObjectsAndClear<T>(this List<T> list) where T : Behaviour
     {
         foreach (var item in list)
         {
@@ -24,7 +24,7 @@ public static class CollectionExtensions
         list.Clear();
     }
 
-    public static void DestroyAllGameObjectsAndClear<T>(this T[] array) where T : MonoBehaviour
+    public static void DestroyAllGameObjectsAndClear<T>(this T[] array) where T : Behaviour
     {
         for (int i = 0; i < array.Length; ++i)
         {

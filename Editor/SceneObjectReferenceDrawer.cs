@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
     [CustomPropertyDrawer(typeof(SceneObjectReference))]
     public class SceneObjectReferenceDrawer : PropertyDrawer

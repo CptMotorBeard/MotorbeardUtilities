@@ -2,11 +2,11 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
-    public class GameEventListenerOneParam<T> : MonoBehaviour, IGameEventListenerOneParam<T>
+    public class GameEventListenerT<T> : MonoBehaviour, IGameEventListenerT<T>
     {
-        [SerializeField] private List<IGameEventOneParam<T>> m_events = new List<IGameEventOneParam<T>>();
+        [SerializeField] private List<IGameEventT<T>> m_events = new List<IGameEventT<T>>();
         [SerializeField] private UnityEvent<T> m_response = null;
 
         private List<GameEventConnection> m_connections = new List<GameEventConnection>();
@@ -33,7 +33,7 @@ namespace MotorbeardUtilities
 
                 for (int i = 0; i < m_events.Count; ++i)
                 {
-                    IGameEventOneParam<T> evt = m_events[i];
+                    IGameEventT<T> evt = m_events[i];
                     if (evt != null)
                     {
                         m_connections.Add(m_events[i].Connect(this));

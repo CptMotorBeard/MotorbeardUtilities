@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
-    [CreateAssetMenu(fileName = "IntValue", menuName = "MotorbeardUtilities/Variables/IntValue")]
+    [CreateAssetMenu(fileName = "IntValue", menuName = "BeardKit/Variables/IntValue")]
     public class IntValue : IValue<int> { }
 }

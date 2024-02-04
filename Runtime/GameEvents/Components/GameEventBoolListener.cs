@@ -1,4 +1,4 @@
-﻿namespace MotorbeardUtilities
+﻿namespace BeardKit
 {
-    public class GameEventBoolListener : GameEventListenerOneParam<bool> { }
+    public class GameEventBoolListener : GameEventListenerT<bool> { }
 }

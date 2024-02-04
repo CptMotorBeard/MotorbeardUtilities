@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
-    [CreateAssetMenu(fileName = "BoolValue", menuName = "MotorbeardUtilities/Variables/BoolValue")]
+    [CreateAssetMenu(fileName = "BoolValue", menuName = "BeardKit/Variables/BoolValue")]
     public class BoolValue : IValue<bool> { }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
     public abstract class IGameEvent : ScriptableObject, IGameEventSignal
     {
@@ -10,6 +10,11 @@ namespace MotorbeardUtilities
         private uint m_dispatchCount = 0;
 
         public bool IsDispatching => m_dispatchCount > 0;
+
+        protected virtual void OnEnable()
+        {
+            this.DontDestroyOnLoad();
+        }
 
         public GameEventConnection Connect(IGameEventListener listener)
         {

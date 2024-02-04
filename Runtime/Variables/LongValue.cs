@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
-    [CreateAssetMenu(fileName = "LongValue", menuName = "MotorbeardUtilities/Variables/LongValue")]
+    [CreateAssetMenu(fileName = "LongValue", menuName = "BeardKit/Variables/LongValue")]
     public class LongValue : IValue<long> { }
 }

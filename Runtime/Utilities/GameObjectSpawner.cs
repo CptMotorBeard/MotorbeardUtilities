@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
-    [CreateAssetMenu(fileName = "GameObjectSpawner", menuName = "MotorbeardUtilities/Utilities/GameObjectSpawner")]
-    public class GameObjectSpawner : ScriptableObject
+    [CreateAssetMenu(fileName = "GameObjectSpawner", menuName = "BeardKit/Utilities/GameObjectSpawner")]
+    public class GameObjectSpawner : NonPersistentScriptableObject
     {
-        [field: SerializeField] public bool SpawnToSceneRoot { get; set; } = false;
+        [field: SerializeField] public bool SpawnToSceneRoot { get; } = false;
 
         private GameObjectSpawnerRoot m_target = null;
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
-    [CreateAssetMenu(fileName = "GameEventBool", menuName = "MotorbeardUtilities/Events/GameEventBool")]
-    public class GameEventBool : GameEventOneParam<bool> { }
+    [CreateAssetMenu(fileName = "GameEventBool", menuName = "BeardKit/Events/GameEventBool")]
+    public class GameEventBool : GameEventT<bool> { }
 }

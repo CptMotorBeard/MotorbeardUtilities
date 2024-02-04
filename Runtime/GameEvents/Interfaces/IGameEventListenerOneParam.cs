@@ -1,6 +1,6 @@
-﻿namespace MotorbeardUtilities
+﻿namespace BeardKit
 {
-    public interface IGameEventListenerOneParam<T>
+    public interface IGameEventListenerT<T>
     {
         void OnEvent(T param);
     }

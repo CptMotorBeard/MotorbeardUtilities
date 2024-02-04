@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MotorbeardUtilities
+namespace BeardKit
 {
-    public abstract class IGameEventOneParam<TData> : ScriptableObject, IGameEventSignal
+    public abstract class IGameEventT<TData> : ScriptableObject, IGameEventSignal
     {
         private LinkedList<object> m_receivers = new LinkedList<object>();
         private uint m_dispatchCount = 0;
 
         public bool IsDispatching => m_dispatchCount > 0;
 
-        public GameEventConnection Connect(IGameEventListenerOneParam<TData> listener)
+        protected virtual void OnEnable()
+        {
+            this.DontDestroyOnLoad();
+        }
+
+        public GameEventConnection Connect(IGameEventListenerT<TData> listener)
         {
             var node = m_receivers.AddLast((object)null);
             GameEventConnection connection = new GameEventConnection(this, node, listener);
@@ -108,7 +113,7 @@ namespace MotorbeardUtilities
                     action.Invoke(data);
                     break;
 
-                case IGameEventListenerOneParam<TData> listener:
+                case IGameEventListenerT<TData> listener:
                     listener.OnEvent(data);
                     break;
 
