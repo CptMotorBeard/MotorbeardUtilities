@@ -14,57 +14,43 @@ namespace BeardKitEditor
 
             if (GUILayout.Button("Assign Fields"))
             {
-#if ODIN_INSPECTOR
-                List<IBehaviourAwakeListener> awakeListeners = new List<IBehaviourAwakeListener>();
-                List<IBehaviourUpdateListener> updateListeners = new List<IBehaviourUpdateListener>();
-                List<IBehaviourDestroyListener> destroyListeners = new List<IBehaviourDestroyListener>();
-#else
-                List<ScriptableObject> awakeListeners = new List<ScriptableObject>();
-                List<ScriptableObject> updateListeners = new List<ScriptableObject>();
-                List<ScriptableObject> destroyListeners = new List<ScriptableObject>();
-#endif
+                AssignFields(target as  MonoBehaviourEventComponent);
+            }
+        }
 
-                string[] guids = AssetDatabase.FindAssets("t: ScriptableObject");
-                foreach (string guid in guids)
+        public static void AssignFields(MonoBehaviourEventComponent component)
+        {
+            List<ScriptableObject> awakeListeners = new List<ScriptableObject>();
+            List<ScriptableObject> updateListeners = new List<ScriptableObject>();
+            List<ScriptableObject> destroyListeners = new List<ScriptableObject>();
+
+            string[] guids = AssetDatabase.FindAssets("t: ScriptableObject");
+            foreach (string guid in guids)
+            {
+                var asset = AssetDatabase.LoadAssetAtPath<ScriptableObject>(AssetDatabase.GUIDToAssetPath(guid));
+                if (asset != null)
                 {
-                    var asset = AssetDatabase.LoadAssetAtPath<ScriptableObject>(AssetDatabase.GUIDToAssetPath(guid));
-                    if (asset != null)
+                    if (asset is IBehaviourAwakeListener)
                     {
-                        if (asset is IBehaviourAwakeListener awakeListener)
-                        {
-#if ODIN_INSPECTOR
-                            awakeListeners.Add(awakeListener);
-#else
-                            awakeListeners.Add(asset);
-#endif
-                        }
+                        awakeListeners.Add(asset);
+                    }
 
-                        if (asset is IBehaviourUpdateListener updateListener)
-                        {
-#if ODIN_INSPECTOR
-                            updateListeners.Add(updateListener);
-#else
-                            updateListeners.Add(asset);
-#endif
-                        }
+                    if (asset is IBehaviourUpdateListener)
+                    {
+                        updateListeners.Add(asset);
+                    }
 
-                        if (asset is IBehaviourDestroyListener destroyListener)
-                        {
-#if ODIN_INSPECTOR
-                            destroyListeners.Add(destroyListener);
-#else
-                            destroyListeners.Add(asset);
-#endif
-                        }
+                    if (asset is IBehaviourDestroyListener)
+                    {
+                        destroyListeners.Add(asset);
                     }
                 }
-
-                var component = target as MonoBehaviourEventComponent;
-                EditorTools.SetPrivateValue(component, "m_awakeListeners", awakeListeners.ToArray());
-                EditorTools.SetPrivateValue(component, "m_updateListeners", updateListeners.ToArray());
-                EditorTools.SetPrivateValue(component, "m_destroyListeners", destroyListeners.ToArray());
-                EditorUtility.SetDirty(component);
             }
+
+            EditorTools.SetPrivateValue(component, "m_awakeListeners", awakeListeners.ToArray());
+            EditorTools.SetPrivateValue(component, "m_updateListeners", updateListeners.ToArray());
+            EditorTools.SetPrivateValue(component, "m_destroyListeners", destroyListeners.ToArray());
+            EditorUtility.SetDirty(component);
         }
     }
 }
