@@ -14,9 +14,15 @@ namespace BeardKitEditor
 
             if (GUILayout.Button("Assign Fields"))
             {
+#if ODIN_INSPECTOR
                 List<IBehaviourAwakeListener> awakeListeners = new List<IBehaviourAwakeListener>();
                 List<IBehaviourUpdateListener> updateListeners = new List<IBehaviourUpdateListener>();
                 List<IBehaviourDestroyListener> destroyListeners = new List<IBehaviourDestroyListener>();
+#else
+                List<ScriptableObject> awakeListeners = new List<ScriptableObject>();
+                List<ScriptableObject> updateListeners = new List<ScriptableObject>();
+                List<ScriptableObject> destroyListeners = new List<ScriptableObject>();
+#endif
 
                 string[] guids = AssetDatabase.FindAssets("t: ScriptableObject");
                 foreach (string guid in guids)
@@ -26,17 +32,29 @@ namespace BeardKitEditor
                     {
                         if (asset is IBehaviourAwakeListener awakeListener)
                         {
+#if ODIN_INSPECTOR
                             awakeListeners.Add(awakeListener);
+#else
+                            awakeListeners.Add(asset);
+#endif
                         }
 
                         if (asset is IBehaviourUpdateListener updateListener)
                         {
+#if ODIN_INSPECTOR
                             updateListeners.Add(updateListener);
+#else
+                            updateListeners.Add(asset);
+#endif
                         }
 
                         if (asset is IBehaviourDestroyListener destroyListener)
                         {
+#if ODIN_INSPECTOR
                             destroyListeners.Add(destroyListener);
+#else
+                            destroyListeners.Add(asset);
+#endif
                         }
                     }
                 }
