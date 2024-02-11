@@ -1,7 +1,8 @@
+using BeardKit;
 using UnityEditor;
 using UnityEngine;
 
-namespace BeardKit
+namespace BeardKitEditor
 {
     [CustomEditor(typeof(GameEvent))]
     public class GameEventEditor : Editor

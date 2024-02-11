@@ -3,20 +3,23 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class SearchObjectAttributeDrawer : PropertyDrawer
+namespace BeardKitEditor
 {
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    public class SearchObjectAttributeDrawer : PropertyDrawer
     {
-        position.width -= 60;
-        EditorGUI.ObjectField(position, property, label);
-
-        position.x += position.width;
-        position.width = 60;
-
-        if (GUI.Button(position, new GUIContent("Find")))
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            Type type = property.GetPropertyAttribute<SearchObjectAttribute>(true).SearchObjectType;
-            SearchWindow.Open(new SearchWindowContext(GUIUtility.GUIToScreenPoint(Event.current.mousePosition)), new ObjectSearchProvider(type, property));
+            position.width -= 60;
+            EditorGUI.ObjectField(position, property, label);
+
+            position.x += position.width;
+            position.width = 60;
+
+            if (GUI.Button(position, new GUIContent("Find")))
+            {
+                Type type = property.GetPropertyAttribute<SearchObjectAttribute>(true).SearchObjectType;
+                SearchWindow.Open(new SearchWindowContext(GUIUtility.GUIToScreenPoint(Event.current.mousePosition)), new ObjectSearchProvider(type, property));
+            }
         }
     }
 }

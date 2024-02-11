@@ -1,9 +1,9 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace BeardKit
+namespace BeardKitEditor
 {
-    [CustomPropertyDrawer(typeof(SceneObjectReference))]
+    [CustomPropertyDrawer(typeof(BeardKit.SceneObjectReference))]
     public class SceneObjectReferenceDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

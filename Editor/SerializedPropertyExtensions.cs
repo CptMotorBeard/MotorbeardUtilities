@@ -3,41 +3,44 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-public static class SerializedPropertyExtensions
+namespace BeardKitEditor
 {
-    public static T GetPropertyAttribute<T>(this SerializedProperty property, bool inherit) where T : PropertyAttribute
+    public static class SerializedPropertyExtensions
     {
-        if (property == null) { return null; }
-
-        Type type = property.serializedObject.targetObject.GetType();
-        MemberInfo memberInfo = null;
-
-        foreach (var name in property.propertyPath.Split('.'))
+        public static T GetPropertyAttribute<T>(this SerializedProperty property, bool inherit) where T : PropertyAttribute
         {
-            memberInfo = type.GetField(name, (BindingFlags)(-1));
+            if (property == null) { return null; }
 
-            if (memberInfo == null)
+            Type type = property.serializedObject.targetObject.GetType();
+            MemberInfo memberInfo = null;
+
+            foreach (var name in property.propertyPath.Split('.'))
             {
-                memberInfo = type.GetProperty(name, (BindingFlags)(-1));
+                memberInfo = type.GetField(name, (BindingFlags)(-1));
+
                 if (memberInfo == null)
                 {
-                    return null;
+                    memberInfo = type.GetProperty(name, (BindingFlags)(-1));
+                    if (memberInfo == null)
+                    {
+                        return null;
+                    }
+
+                    type = memberInfo.DeclaringType;
                 }
-
-                type = memberInfo.DeclaringType;
             }
-        }
 
-        T[] attributes;
-        if (memberInfo != null)
-        {
-            attributes = memberInfo.GetCustomAttribute<T>(inherit) as T[];
-        }
-        else
-        {
-            return null;
-        }
+            T[] attributes;
+            if (memberInfo != null)
+            {
+                attributes = memberInfo.GetCustomAttribute<T>(inherit) as T[];
+            }
+            else
+            {
+                return null;
+            }
 
-        return attributes.Length > 0 ? attributes[0] : null;
+            return attributes.Length > 0 ? attributes[0] : null;
+        }
     }
 }
