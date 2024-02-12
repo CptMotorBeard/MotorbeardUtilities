@@ -10,19 +10,28 @@ namespace BeardKit
 
         private void OnValidate()
         {
-            foreach (var so in m_awakeListeners)
+            if (m_awakeListeners != null)
             {
-                Assert.IsTrue(so is IBehaviourAwakeListener);
+                foreach (var so in m_awakeListeners)
+                {
+                    Assert.IsTrue(so is IBehaviourAwakeListener);
+                }
             }
 
-            foreach (var so in m_updateListeners)
+            if (m_updateListeners != null)
             {
-                Assert.IsTrue(so is IBehaviourUpdateListener);
+                foreach (var so in m_updateListeners)
+                {
+                    Assert.IsTrue(so is IBehaviourUpdateListener);
+                }
             }
 
-            foreach (var so in m_destroyListeners)
+            if (m_destroyListeners != null)
             {
-                Assert.IsTrue(so is IBehaviourDestroyListener);
+                foreach (var so in m_destroyListeners)
+                {
+                    Assert.IsTrue(so is IBehaviourDestroyListener);
+                }
             }
         }
 
