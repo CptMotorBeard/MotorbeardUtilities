@@ -145,8 +145,17 @@ namespace BeardKit
         public static Vector2 Add(this Vector2 v, float? x = null, float? y = null)
         {
             Vector2 newVector;
-            newVector.x = v.x + x ?? 0;
-            newVector.y = v.y + y ?? 0;
+            newVector.x = v.x + (x ?? 0);
+            newVector.y = v.y + (y ?? 0);
+
+            return newVector;
+        }
+
+        public static Vector2 Add(this Vector2 v, Vector2 w)
+        {
+            Vector2 newVector;
+            newVector.x = v.x + w.x;
+            newVector.y = v.y + w.y;
 
             return newVector;
         }
@@ -154,9 +163,19 @@ namespace BeardKit
         public static Vector3 Add(this Vector3 v, float? x = null, float? y = null, float? z = null)
         {
             Vector3 newVector;
-            newVector.x = v.x + x ?? 0;
-            newVector.y = v.y + y ?? 0;
-            newVector.z = v.z + z ?? 0;
+            newVector.x = v.x + (x ?? 0);
+            newVector.y = v.y + (y ?? 0);
+            newVector.z = v.z + (z ?? 0);
+
+            return newVector;
+        }
+
+        public static Vector2 Add(this Vector3 v, Vector3 w)
+        {
+            Vector3 newVector;
+            newVector.x = v.x + w.x;
+            newVector.y = v.y + w.y;
+            newVector.z = v.z + w.z;
 
             return newVector;
         }
@@ -164,8 +183,17 @@ namespace BeardKit
         public static Vector2 Subtract(this Vector2 v, float? x = null, float? y = null)
         {
             Vector2 newVector;
-            newVector.x = v.x - x ?? 0;
-            newVector.y = v.y - y ?? 0;
+            newVector.x = v.x - (x ?? 0);
+            newVector.y = v.y - (y ?? 0);
+
+            return newVector;
+        }
+
+        public static Vector2 Subtract(this Vector2 v, Vector2 w)
+        {
+            Vector2 newVector;
+            newVector.x = v.x - w.x;
+            newVector.y = v.y - w.y;
 
             return newVector;
         }
@@ -173,9 +201,19 @@ namespace BeardKit
         public static Vector3 Subtract(this Vector3 v, float? x = null, float? y = null, float? z = null)
         {
             Vector3 newVector;
-            newVector.x = v.x - x ?? 0;
-            newVector.y = v.y - y ?? 0;
-            newVector.z = v.z - z ?? 0;
+            newVector.x = v.x - (x ?? 0);
+            newVector.y = v.y - (y ?? 0);
+            newVector.z = v.z - (z ?? 0);
+
+            return newVector;
+        }
+
+        public static Vector2 Subtract(this Vector3 v, Vector3 w)
+        {
+            Vector3 newVector;
+            newVector.x = v.x - w.x;
+            newVector.y = v.y - w.y;
+            newVector.z = v.z - w.z;
 
             return newVector;
         }
