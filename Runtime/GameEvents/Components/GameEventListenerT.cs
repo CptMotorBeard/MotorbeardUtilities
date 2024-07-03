@@ -7,11 +7,10 @@ namespace BeardKit
     public class GameEventListenerT<T> : MonoBehaviour, IGameEventListenerT<T>
     {
         [SerializeField] private List<IGameEventT<T>> m_events = new List<IGameEventT<T>>();
-        [SerializeField] private UnityEvent<T> m_response = null;
-
-        private List<GameEventConnection> m_connections = new List<GameEventConnection>();
-
+        [SerializeField] private UnityEvent<T> m_response;
         public bool IsRegistered => m_connections.Count > 0;
+
+        private readonly List<GameEventConnection> m_connections = new List<GameEventConnection>();
 
         private void OnEnable()
         {
@@ -23,6 +22,11 @@ namespace BeardKit
             DisconnectFromEvent();
         }
 
+        public void OnEvent(T args)
+        {
+            m_response?.Invoke(args);
+        }
+
         public void ConnectToEvent()
         {
             DisconnectFromEvent();
@@ -31,7 +35,7 @@ namespace BeardKit
             {
                 m_connections.Capacity = m_events.Count;
 
-                for (int i = 0; i < m_events.Count; ++i)
+                for (var i = 0; i < m_events.Count; ++i)
                 {
                     IGameEventT<T> evt = m_events[i];
                     if (evt != null)
@@ -52,17 +56,12 @@ namespace BeardKit
 
         public void DisconnectFromEvent()
         {
-            for (int i = 0; i < m_connections.Count; ++i)
+            for (var i = 0; i < m_connections.Count; ++i)
             {
                 m_connections[i].Disconnect();
             }
 
             m_connections.Clear();
-        }
-
-        public void OnEvent(T args)
-        {
-            m_response?.Invoke(args);
         }
     }
 }

@@ -18,7 +18,8 @@ namespace BeardKitEditor
             if (GUI.Button(position, new GUIContent("Find")))
             {
                 Type type = property.GetPropertyAttribute<SearchObjectAttribute>(true).SearchObjectType;
-                SearchWindow.Open(new SearchWindowContext(GUIUtility.GUIToScreenPoint(Event.current.mousePosition)), new ObjectSearchProvider(type, property));
+                SearchWindow.Open(new SearchWindowContext(GUIUtility.GUIToScreenPoint(Event.current.mousePosition)),
+                    new ObjectSearchProvider(type, property));
             }
         }
     }

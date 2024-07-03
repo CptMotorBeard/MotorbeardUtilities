@@ -1,5 +1,5 @@
-using BeardKit;
 using System.Collections.Generic;
+using BeardKit;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,15 +14,15 @@ namespace BeardKitEditor
 
             if (GUILayout.Button("Assign Fields"))
             {
-                AssignFields(target as  MonoBehaviourEventComponent);
+                AssignFields(target as MonoBehaviourEventComponent);
             }
         }
 
         public static void AssignFields(MonoBehaviourEventComponent component)
         {
-            List<ScriptableObject> awakeListeners = new List<ScriptableObject>();
-            List<ScriptableObject> updateListeners = new List<ScriptableObject>();
-            List<ScriptableObject> destroyListeners = new List<ScriptableObject>();
+            var awakeListeners = new List<ScriptableObject>();
+            var updateListeners = new List<ScriptableObject>();
+            var destroyListeners = new List<ScriptableObject>();
 
             string[] guids = AssetDatabase.FindAssets("t: ScriptableObject");
             foreach (string guid in guids)

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using BeardKit;
 using UnityEngine;
 
 namespace BeardKit
@@ -8,7 +9,7 @@ namespace BeardKit
         public Coroutine Coroutine { get; private set; }
         public T Result { get; private set; }
 
-        private IEnumerator m_target;
+        private readonly IEnumerator m_target;
 
         public CoroutineWithData(MonoBehaviour owner, IEnumerator target)
         {
@@ -29,8 +30,8 @@ namespace BeardKit
 
 public static class MonoBehaviourCoroutineWithDataExtensions
 {
-    public static BeardKit.CoroutineWithData<T> StartCoroutineWithData<T>(this MonoBehaviour owner, IEnumerator target)
+    public static CoroutineWithData<T> StartCoroutineWithData<T>(this MonoBehaviour owner, IEnumerator target)
     {
-        return new BeardKit.CoroutineWithData<T>(owner, target);
+        return new CoroutineWithData<T>(owner, target);
     }
 }

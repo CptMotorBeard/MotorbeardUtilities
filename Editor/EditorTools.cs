@@ -1,5 +1,6 @@
-using BeardKit;
+using System;
 using System.Reflection;
+using BeardKit;
 
 namespace BeardKitEditor
 {
@@ -7,7 +8,7 @@ namespace BeardKitEditor
     {
         public static void SetPrivateValue(object obj, string key, object value)
         {
-            var type = obj.GetType();
+            Type type = obj.GetType();
             while (type != null)
             {
                 FieldInfo field = type.GetField(key, BindingFlags.NonPublic | BindingFlags.Instance);

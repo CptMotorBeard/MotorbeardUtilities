@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BeardKit
 {
@@ -9,9 +10,9 @@ namespace BeardKit
     }
 
     public readonly struct Error<TCode> : IError
-        where TCode : struct, System.Enum
+        where TCode : struct, Enum
     {
-        public Error(in TCode code, in string message="")
+        public Error(in TCode code, in string message = "")
         {
             Code = code;
             Message = message;
@@ -34,7 +35,7 @@ namespace BeardKit
 
         public string ToErrorCodeString()
         {
-            return $"{System.Convert.ToInt32(Code)}";
+            return $"{Convert.ToInt32(Code)}";
         }
 
         public static implicit operator Error<TCode>(in TCode code)
@@ -73,6 +74,7 @@ namespace BeardKit
             {
                 return Equals(other);
             }
+
             return false;
         }
 
@@ -83,7 +85,7 @@ namespace BeardKit
     }
 
     public readonly struct Error<TCode, TError> : IError
-        where TCode : struct, System.Enum
+        where TCode : struct, Enum
         where TError : struct, IError
     {
         private readonly IError m_innerError;
@@ -108,7 +110,7 @@ namespace BeardKit
         public override string ToString()
         {
             string outerError = string.IsNullOrEmpty(Message) ? $"Code: {Code}" : $"Code: {Code}, Message: {Message}";
-            string innerError = m_innerError.ToString();
+            var innerError = m_innerError.ToString();
             // Inverse
             string str = innerError;
             if (!string.IsNullOrEmpty(outerError))
@@ -117,6 +119,7 @@ namespace BeardKit
                 {
                     str += "\n";
                 }
+
                 str += outerError;
             }
 
@@ -130,10 +133,10 @@ namespace BeardKit
             {
                 return string.IsNullOrEmpty(Message) ? $"Code: {Code}" : $"Code: {Code}, Message: {Message}";
             }
-            else
-            {
-                return string.IsNullOrEmpty(Message) ? $"Code: {Code}, Inner: {{ {innerError} }}" : $"Code: {Code}, Message: {Message}, , Inner: {{ {innerError} }}";
-            }
+
+            return string.IsNullOrEmpty(Message)
+                ? $"Code: {Code}, Inner: {{ {innerError} }}"
+                : $"Code: {Code}, Message: {Message}, , Inner: {{ {innerError} }}";
         }
 
         public string ToErrorCodeString()
@@ -141,16 +144,21 @@ namespace BeardKit
             string innerCode = m_innerError.ToErrorCodeString();
             if (string.IsNullOrEmpty(innerCode))
             {
-                return $"{System.Convert.ToInt32(Code)}";
+                return $"{Convert.ToInt32(Code)}";
             }
-            else
-            {
-                return $"{System.Convert.ToInt32(Code)}-{innerCode}";
-            }
+
+            return $"{Convert.ToInt32(Code)}-{innerCode}";
         }
 
-        public bool HasInner() => m_innerError != null;
-        public TError GetInner() => (TError)m_innerError;
+        public bool HasInner()
+        {
+            return m_innerError != null;
+        }
+
+        public TError GetInner()
+        {
+            return (TError)m_innerError;
+        }
 
         public bool TryGetInner(out TError error)
         {
@@ -200,6 +208,7 @@ namespace BeardKit
             {
                 return Equals(other);
             }
+
             return false;
         }
 

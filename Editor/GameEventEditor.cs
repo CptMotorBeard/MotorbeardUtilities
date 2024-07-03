@@ -13,9 +13,11 @@ namespace BeardKitEditor
 
             GUI.enabled = Application.isPlaying;
 
-            GameEvent e = target as GameEvent;
+            var e = target as GameEvent;
             if (GUILayout.Button("Emit Event"))
+            {
                 e.Dispatch();
+            }
         }
     }
 }

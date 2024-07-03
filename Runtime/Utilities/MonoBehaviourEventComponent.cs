@@ -4,42 +4,15 @@ namespace BeardKit
 {
     public class MonoBehaviourEventComponent : MonoBehaviour
     {
-        [SerializeField] ScriptableObject[] m_awakeListeners;
-        [SerializeField] ScriptableObject[] m_updateListeners;
-        [SerializeField] ScriptableObject[] m_destroyListeners;
-
-        private void OnValidate()
-        {
-            if (m_awakeListeners != null)
-            {
-                foreach (var so in m_awakeListeners)
-                {
-                    Assert.IsTrue(so is IBehaviourAwakeListener);
-                }
-            }
-
-            if (m_updateListeners != null)
-            {
-                foreach (var so in m_updateListeners)
-                {
-                    Assert.IsTrue(so is IBehaviourUpdateListener);
-                }
-            }
-
-            if (m_destroyListeners != null)
-            {
-                foreach (var so in m_destroyListeners)
-                {
-                    Assert.IsTrue(so is IBehaviourDestroyListener);
-                }
-            }
-        }
+        [SerializeField] private ScriptableObject[] m_awakeListeners;
+        [SerializeField] private ScriptableObject[] m_updateListeners;
+        [SerializeField] private ScriptableObject[] m_destroyListeners;
 
         private void Awake()
         {
             DontDestroyOnLoad(this);
 
-            foreach (var so in m_awakeListeners)
+            foreach (ScriptableObject so in m_awakeListeners)
             {
                 if (so is IBehaviourAwakeListener listener)
                 {
@@ -50,7 +23,7 @@ namespace BeardKit
 
         private void Update()
         {
-            foreach (var so in m_updateListeners)
+            foreach (ScriptableObject so in m_updateListeners)
             {
                 if (so is IBehaviourUpdateListener listener)
                 {
@@ -61,11 +34,38 @@ namespace BeardKit
 
         private void OnDestroy()
         {
-            foreach (var so in m_destroyListeners)
+            foreach (ScriptableObject so in m_destroyListeners)
             {
                 if (so is IBehaviourDestroyListener listener)
                 {
                     listener.OnDestroy();
+                }
+            }
+        }
+
+        private void OnValidate()
+        {
+            if (m_awakeListeners != null)
+            {
+                foreach (ScriptableObject so in m_awakeListeners)
+                {
+                    Assert.IsTrue(so is IBehaviourAwakeListener);
+                }
+            }
+
+            if (m_updateListeners != null)
+            {
+                foreach (ScriptableObject so in m_updateListeners)
+                {
+                    Assert.IsTrue(so is IBehaviourUpdateListener);
+                }
+            }
+
+            if (m_destroyListeners != null)
+            {
+                foreach (ScriptableObject so in m_destroyListeners)
+                {
+                    Assert.IsTrue(so is IBehaviourDestroyListener);
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BeardKit.Detail;
 
 namespace BeardKit
 {
@@ -27,7 +28,9 @@ namespace BeardKit
             get
             {
                 if (m_error != null)
+                {
                     throw new InvalidOperationException("Result Payload being accessed but result has an error!");
+                }
 
                 return m_payload;
             }
@@ -38,13 +41,16 @@ namespace BeardKit
             get
             {
                 if (m_error == null)
+                {
                     throw new InvalidOperationException("Result Error being accessed but result is a success!");
+                }
 
                 return m_error.Value;
             }
         }
 
         #region Operators
+
         public static implicit operator Result<PAYLOAD_T, ERROR_CODE>(in ERROR_CODE errorCode)
         {
             return new Result<PAYLOAD_T, ERROR_CODE>(errorCode);
@@ -55,12 +61,12 @@ namespace BeardKit
             return new Result<PAYLOAD_T, ERROR_CODE>(payload);
         }
 
-        public static bool operator ==(in Result<PAYLOAD_T, ERROR_CODE> result, in Detail.SuccessType success)
+        public static bool operator ==(in Result<PAYLOAD_T, ERROR_CODE> result, in SuccessType success)
         {
             return result.m_error == null;
         }
 
-        public static bool operator !=(in Result<PAYLOAD_T, ERROR_CODE> result, in Detail.SuccessType success)
+        public static bool operator !=(in Result<PAYLOAD_T, ERROR_CODE> result, in SuccessType success)
         {
             return !(result == success);
         }
@@ -68,7 +74,9 @@ namespace BeardKit
         public static bool operator ==(in Result<PAYLOAD_T, ERROR_CODE> result, in ERROR_CODE error_code)
         {
             if (!result.m_error.HasValue)
+            {
                 return false;
+            }
 
             if (error_code is Enum)
             {
@@ -82,6 +90,7 @@ namespace BeardKit
         {
             return !(result == error_code);
         }
+
         #endregion
 
         private readonly ERROR_CODE? m_error;
@@ -105,24 +114,27 @@ namespace BeardKit
             get
             {
                 if (m_error == null)
+                {
                     throw new InvalidOperationException("Result Error being accessed but result is a success!");
+                }
 
                 return m_error.Value;
             }
         }
 
         #region Operators
+
         public static implicit operator Result<ERROR_CODE>(in ERROR_CODE errorCode)
         {
             return new Result<ERROR_CODE>(errorCode);
         }
 
-        public static bool operator ==(in Result<ERROR_CODE> result, in Detail.SuccessType success)
+        public static bool operator ==(in Result<ERROR_CODE> result, in SuccessType success)
         {
             return result.m_error == null;
         }
 
-        public static bool operator !=(in Result<ERROR_CODE> result, in Detail.SuccessType success)
+        public static bool operator !=(in Result<ERROR_CODE> result, in SuccessType success)
         {
             return !(result == success);
         }
@@ -130,7 +142,9 @@ namespace BeardKit
         public static bool operator ==(in Result<ERROR_CODE> result, in ERROR_CODE error_code)
         {
             if (!result.m_error.HasValue)
+            {
                 return false;
+            }
 
             if (error_code is Enum)
             {
@@ -144,6 +158,7 @@ namespace BeardKit
         {
             return !(result == error_code);
         }
+
         #endregion
 
         private readonly ERROR_CODE? m_error;
@@ -151,7 +166,7 @@ namespace BeardKit
 
     public static class Result
     {
-        public static Detail.SuccessType Success = Detail.SuccessType.SuccessValue;
+        public static SuccessType Success = SuccessType.SuccessValue;
     }
 
     namespace Detail

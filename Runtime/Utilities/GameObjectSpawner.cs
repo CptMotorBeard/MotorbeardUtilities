@@ -8,7 +8,7 @@ namespace BeardKit
     {
         [field: SerializeField] public bool SpawnToSceneRoot { get; } = false;
 
-        private GameObjectSpawnerRoot m_target = null;
+        private GameObjectSpawnerRoot m_target;
 
         public void RegisterGameObjectSpawnerRoot(GameObjectSpawnerRoot root)
         {
@@ -24,12 +24,13 @@ namespace BeardKit
             }
         }
 
-        public ObjectType InstantiateObject<ObjectType>(ObjectType original, Vector3 position = default, Quaternion rotation = default) where ObjectType : Object
+        public ObjectType InstantiateObject<ObjectType>(ObjectType original, Vector3 position = default, Quaternion rotation = default)
+            where ObjectType : Object
         {
             if (m_target == null)
             {
                 DebugLogger.LogWarning("No target has been setup for instantiation");
-                return UnityEngine.Object.Instantiate(original, position, rotation);
+                return Instantiate(original, position, rotation);
             }
 
             if (SpawnToSceneRoot)
@@ -37,15 +38,13 @@ namespace BeardKit
                 Scene currentActiveScene = SceneManager.GetActiveScene();
                 SceneManager.SetActiveScene(m_target.gameObject.scene);
 
-                ObjectType go = UnityEngine.Object.Instantiate(original, position, rotation);
+                ObjectType go = Instantiate(original, position, rotation);
                 SceneManager.SetActiveScene(currentActiveScene);
 
                 return go;
             }
-            else
-            {
-                return UnityEngine.Object.Instantiate(original, position, rotation, m_target.transform);
-            }
+
+            return Instantiate(original, position, rotation, m_target.transform);
         }
 
         public GameObject NewGameObject()
@@ -61,14 +60,14 @@ namespace BeardKit
                 Scene currentActiveScene = SceneManager.GetActiveScene();
                 SceneManager.SetActiveScene(m_target.gameObject.scene);
 
-                GameObject go = new GameObject();
+                var go = new GameObject();
                 SceneManager.SetActiveScene(currentActiveScene);
 
                 return go;
             }
             else
             {
-                GameObject go = new GameObject();
+                var go = new GameObject();
                 go.transform.parent = m_target.transform;
                 return go;
             }

@@ -1,9 +1,10 @@
-﻿using UnityEditor;
+﻿using BeardKit;
+using UnityEditor;
 using UnityEngine;
 
 namespace BeardKitEditor
 {
-    [CustomPropertyDrawer(typeof(BeardKit.SceneObjectReference))]
+    [CustomPropertyDrawer(typeof(SceneObjectReference))]
     public class SceneObjectReferenceDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -13,11 +14,11 @@ namespace BeardKitEditor
             var oldScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(scenePath);
 
             EditorGUI.BeginChangeCheck();
-            var newScene = EditorGUILayout.ObjectField(label, oldScene, typeof(SceneAsset), true);
+            Object newScene = EditorGUILayout.ObjectField(label, oldScene, typeof(SceneAsset), true);
 
             if (EditorGUI.EndChangeCheck())
             {
-                var newPath = AssetDatabase.GetAssetPath(newScene);
+                string newPath = AssetDatabase.GetAssetPath(newScene);
                 serializedPath.stringValue = newPath;
             }
         }

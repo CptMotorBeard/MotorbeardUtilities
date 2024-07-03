@@ -7,7 +7,8 @@ namespace BeardKitEditor
     public static class AdditionalGizmos
     {
         /// <summary>Editor Only</summary>
-        public static void DrawArrow(Vector3 start, Vector3 end, float lineWidth = 6, float arrowHeadLength = 5f, float arrowHeadAngle = 30.0f)
+        public static void DrawArrow(Vector3 start, Vector3 end, float lineWidth = 6, float arrowHeadLength = 5f,
+            float arrowHeadAngle = 30.0f)
         {
             DrawThickLine(start, end, lineWidth);
 

@@ -6,20 +6,29 @@ namespace BeardKit
 {
     public abstract class IGameEventT<TData> : ScriptableObject, IGameEventSignal
     {
-        private LinkedList<object> m_receivers = new LinkedList<object>();
-        private uint m_dispatchCount = 0;
-
         public bool IsDispatching => m_dispatchCount > 0;
+
+        private readonly LinkedList<object> m_receivers = new LinkedList<object>();
+        private uint m_dispatchCount;
 
         protected virtual void OnEnable()
         {
             this.DontDestroyOnLoad();
         }
 
+        void IGameEventSignal.AttemptDisconnect(LinkedListNode<object> node)
+        {
+            if (!IsDispatching &&
+                node != null)
+            {
+                m_receivers.Remove(node);
+            }
+        }
+
         public GameEventConnection Connect(IGameEventListenerT<TData> listener)
         {
-            var node = m_receivers.AddLast((object)null);
-            GameEventConnection connection = new GameEventConnection(this, node, listener);
+            LinkedListNode<object> node = m_receivers.AddLast((object)null);
+            var connection = new GameEventConnection(this, node, listener);
             node.Value = new WeakReference<GameEventConnection>(connection);
 
             return connection;
@@ -27,8 +36,8 @@ namespace BeardKit
 
         public GameEventConnection Connect(Action<TData> action)
         {
-            var node = m_receivers.AddLast((object)null);
-            GameEventConnection connection = new GameEventConnection(this, node, action);
+            LinkedListNode<object> node = m_receivers.AddLast((object)null);
+            var connection = new GameEventConnection(this, node, action);
             node.Value = new WeakReference<GameEventConnection>(connection);
 
             return connection;
@@ -38,25 +47,28 @@ namespace BeardKit
         {
             ++m_dispatchCount;
 
-            var node = m_receivers.First;
+            LinkedListNode<object> node = m_receivers.First;
             int nodeCount = m_receivers.Count;
 
-            while (node != null && nodeCount-- > 0)
+            while (node != null &&
+                   nodeCount-- > 0)
             {
                 GameEventConnection connection = GetConnectionFromNode(node);
-                if (connection == null && m_dispatchCount == 1)
+                if (connection == null &&
+                    m_dispatchCount == 1)
                 {
-                    var nodeToRemove = node;
+                    LinkedListNode<object> nodeToRemove = node;
                     node = node.Next;
                     m_receivers.Remove(nodeToRemove);
                     continue;
                 }
 
                 AttemptDispatch(connection, data);
-                var oldNode = node;
+                LinkedListNode<object> oldNode = node;
                 node = node.Next;
 
-                if (connection.IsFlaggedForRemoval && m_dispatchCount == 1)
+                if (connection.IsFlaggedForRemoval &&
+                    m_dispatchCount == 1)
                 {
                     m_receivers.Remove(oldNode);
                 }
@@ -67,10 +79,10 @@ namespace BeardKit
 
         public void DisconnectAll()
         {
-            var node = m_receivers.First;
+            LinkedListNode<object> node = m_receivers.First;
             while (node != null)
             {
-                var nextNode = node.Next;
+                LinkedListNode<object> nextNode = node.Next;
                 GameEventConnection connection = GetConnectionFromNode(node);
                 connection?.Disconnect();
                 node = nextNode;
@@ -79,12 +91,14 @@ namespace BeardKit
 
         public bool HasConnections()
         {
-            var node = m_receivers.First;
+            LinkedListNode<object> node = m_receivers.First;
             while (node != null)
             {
                 GameEventConnection connection = GetConnectionFromNode(node);
                 if (!connection?.IsFlaggedForRemoval ?? false)
+                {
                     return true;
+                }
 
                 node = node.Next;
             }
@@ -92,20 +106,14 @@ namespace BeardKit
             return false;
         }
 
-        void IGameEventSignal.AttemptDisconnect(LinkedListNode<object> node)
-        {
-            if (!IsDispatching && node != null)
-            {
-                m_receivers.Remove(node);
-            }
-        }
-
         private static void AttemptDispatch(GameEventConnection connection, TData data)
         {
             object callable = connection.GetCallable();
 
             if (callable == null)
+            {
                 return;
+            }
 
             switch (callable)
             {
@@ -129,7 +137,10 @@ namespace BeardKit
             {
                 case WeakReference<GameEventConnection> weakRef:
                     if (weakRef.TryGetTarget(out GameEventConnection target))
+                    {
                         return target;
+                    }
+
                     return null;
 
                 case GameEventConnection connection:

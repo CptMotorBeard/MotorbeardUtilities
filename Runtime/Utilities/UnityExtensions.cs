@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityObject = UnityEngine.Object;
 
 namespace BeardKit
@@ -10,7 +9,7 @@ namespace BeardKit
         /// <summary>
         /// Converts a Unity pseudo-null to a real null, allowing for coalesce operators
         /// </summary>
-        /// <returns><paramref name="obj"/> if it is not null, and an <see cref="object"/> real null if it is.</returns>
+        /// <returns><paramref name="obj" /> if it is not null, and an <see cref="object" /> real null if it is.</returns>
         public static T AsRealNull<T>(this T obj) where T : UnityObject
         {
             if (obj == null)
@@ -24,7 +23,10 @@ namespace BeardKit
 
     public static class GameObjectExtensions
     {
-        /// <summary>As <see cref="UnityEngine.Transform.Find(string)"/> but returns a <see cref="UnityEngine.GameObject"/> instead</summary>
+        /// <summary>
+        /// As <see cref="UnityEngine.Transform.Find(string)" /> but returns a <see cref="UnityEngine.GameObject" />
+        /// instead
+        /// </summary>
         public static GameObject Find(this GameObject parent, string name)
         {
             Transform foundTransform = parent.transform.Find(name);
@@ -36,7 +38,10 @@ namespace BeardKit
             return null;
         }
 
-        /// <summary>As <see cref="TransformExtensions.TryFind(Transform, string, out Transform)"/> but returns a <see cref="UnityEngine.GameObject"/> instead</summary>
+        /// <summary>
+        /// As <see cref="TransformExtensions.TryFind(Transform, string, out Transform)" /> but returns a
+        /// <see cref="UnityEngine.GameObject" /> instead
+        /// </summary>
         public static bool TryFind(this GameObject parent, string name, out GameObject foundGameObject)
         {
             if (parent.transform.TryFind(name, out Transform foundTransform))
@@ -84,7 +89,7 @@ namespace BeardKit
     {
         public static void DestroyAllGameObjectsAndClear<T>(this List<T> list) where T : Behaviour
         {
-            foreach (var item in list)
+            foreach (T item in list)
             {
                 Object.Destroy(item.gameObject);
             }
@@ -94,7 +99,7 @@ namespace BeardKit
 
         public static void DestroyAllGameObjectsAndClear<T>(this T[] array) where T : Behaviour
         {
-            for (int i = 0; i < array.Length; ++i)
+            for (var i = 0; i < array.Length; ++i)
             {
                 Object.Destroy(array[i].gameObject);
                 array[i] = null;
@@ -103,7 +108,7 @@ namespace BeardKit
 
         public static void DestroyAllAndClear<T>(this List<T> list) where T : Object
         {
-            foreach (var item in list)
+            foreach (T item in list)
             {
                 Object.Destroy(item);
             }
@@ -113,7 +118,7 @@ namespace BeardKit
 
         public static void DestroyAllAndClear<T>(this T[] array) where T : Object
         {
-            for (int i = 0; i < array.Length; ++i)
+            for (var i = 0; i < array.Length; ++i)
             {
                 Object.Destroy(array[i]);
                 array[i] = null;
@@ -242,12 +247,12 @@ namespace BeardKit
     {
         public static double Min(double a, double b)
         {
-            return (a < b) ? a : b;
+            return a < b ? a : b;
         }
 
         public static double Max(double a, double b)
         {
-            return (a > b) ? a : b;
+            return a > b ? a : b;
         }
     }
 }

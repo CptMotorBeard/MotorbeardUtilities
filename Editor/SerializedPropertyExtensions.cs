@@ -9,12 +9,15 @@ namespace BeardKitEditor
     {
         public static T GetPropertyAttribute<T>(this SerializedProperty property, bool inherit) where T : PropertyAttribute
         {
-            if (property == null) { return null; }
+            if (property == null)
+            {
+                return null;
+            }
 
             Type type = property.serializedObject.targetObject.GetType();
             MemberInfo memberInfo = null;
 
-            foreach (var name in property.propertyPath.Split('.'))
+            foreach (string name in property.propertyPath.Split('.'))
             {
                 memberInfo = type.GetField(name, (BindingFlags)(-1));
 

@@ -1,4 +1,6 @@
-﻿namespace BeardKit
+﻿using UnityEngine;
+
+namespace BeardKit
 {
-    public class GameEventGameObjectListener : GameEventListenerT<UnityEngine.GameObject> { }
+    public class GameEventGameObjectListener : GameEventListenerT<GameObject> { }
 }
