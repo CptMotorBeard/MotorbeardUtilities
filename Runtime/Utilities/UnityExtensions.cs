@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using UnityObject = UnityEngine.Object;
 
 namespace BeardKit
@@ -85,13 +87,174 @@ namespace BeardKit
         }
     }
 
+    public static class RectTransformExtensions
+    {
+        #region Left, Right, Top, Bottom
+
+        public static void SetLeft(this RectTransform rectTransform, float left)
+        {
+            rectTransform.offsetMin = rectTransform.offsetMin.With(x: left);
+        }
+
+        public static void SetRight(this RectTransform rectTransform, float right)
+        {
+            rectTransform.offsetMax = rectTransform.offsetMin.With(x: -right);
+        }
+
+        public static void SetTop(this RectTransform rectTransform, float top)
+        {
+            rectTransform.offsetMax = rectTransform.offsetMax.With(y: -top);
+        }
+
+        public static void SetBottom(this RectTransform rectTransform, float bottom)
+        {
+            rectTransform.offsetMin = rectTransform.offsetMin.With(y: bottom);
+        }
+
+        public static float GetLeft(this RectTransform rectTransform)
+        {
+            return rectTransform.offsetMin.x;
+        }
+
+        public static float GetRight(this RectTransform rectTransform)
+        {
+            return -rectTransform.offsetMax.x;
+        }
+
+        public static float GetTop(this RectTransform rectTransform)
+        {
+            return -rectTransform.offsetMax.y;
+        }
+
+        public static float GetBottom(this RectTransform rectTransform)
+        {
+            return rectTransform.offsetMin.y;
+        }
+
+        #endregion
+
+        #region Anchor Offsets
+
+        public static void SetLeftAnchorOffset(this RectTransform rectTransform, float leftPercent)
+        {
+            rectTransform.anchorMin = rectTransform.anchorMin.With(x: leftPercent);
+        }
+
+        public static void SetRightAnchorOffset(this RectTransform rectTransform, float rightPercent)
+        {
+            rectTransform.anchorMax = rectTransform.anchorMax.With(x: 1f - rightPercent);
+        }
+
+        public static void SetTopAnchorOffset(this RectTransform rectTransform, float topPercent)
+        {
+            rectTransform.anchorMax = rectTransform.anchorMax.With(y: 1f - topPercent);
+        }
+
+        public static void SetBottomAnchorOffset(this RectTransform rectTransform, float bottomPercent)
+        {
+            rectTransform.anchorMin = rectTransform.anchorMin.With(y: bottomPercent);
+        }
+
+        public static void SetAnchorOffset(this RectTransform rectTransform, float left, float top, float right, float bottom)
+        {
+            rectTransform.anchorMin = Vector2.zero.With(x: left, y: bottom);
+            rectTransform.anchorMax = Vector2.zero.With(x: 1 - right, y: 1 - top);
+        }
+
+        #endregion
+
+        #region World Position
+
+        // Clockwise, starting from bottom left
+        private static readonly Vector3[] s_fourCorners = new Vector3[4];
+
+        public static Vector2 GetWorldCenter(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(s_fourCorners);
+            float x = (s_fourCorners[0].x + s_fourCorners[3].x) / 2f;
+            float y = (s_fourCorners[0].y + s_fourCorners[1].y) / 2f;
+            return Vector2.zero.With(x, y);
+        }
+
+        public static float GetWorldLeft(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(s_fourCorners);
+            return s_fourCorners[0].x;
+        }
+
+        public static float GetWorldRight(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(s_fourCorners);
+            return s_fourCorners[2].x;
+        }
+
+        public static float GetWorldTop(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(s_fourCorners);
+            return s_fourCorners[1].y;
+        }
+
+        public static float GetWorldBottom(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(s_fourCorners);
+            return s_fourCorners[0].y;
+        }
+
+        public static Vector2 GetWorldTopLeft(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(s_fourCorners);
+            float x = s_fourCorners[0].x;
+            float y = s_fourCorners[1].y;
+            return Vector2.zero.With(x, y);
+        }
+
+        public static Vector2 GetWorldTopRight(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(s_fourCorners);
+            float x = s_fourCorners[2].x;
+            float y = s_fourCorners[1].y;
+            return Vector2.zero.With(x, y);
+        }
+
+        public static Vector2 GetWorldBottomLeft(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(s_fourCorners);
+            float x = s_fourCorners[0].x;
+            float y = s_fourCorners[0].y;
+            return Vector2.zero.With(x, y);
+        }
+
+        public static Vector2 GetWorldBottomRight(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(s_fourCorners);
+            float x = s_fourCorners[2].x;
+            float y = s_fourCorners[0].y;
+            return Vector2.zero.With(x, y);
+        }
+
+        public static Rect GetWorldRect(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(s_fourCorners);
+
+            float x = s_fourCorners[0].x;
+            float y = s_fourCorners[0].y;
+
+            float width = Mathf.Abs(s_fourCorners[3].x - s_fourCorners[0].x);
+            float height = Mathf.Abs(s_fourCorners[1].y - s_fourCorners[0].y);
+
+            return new Rect(x, y, width, height);
+        }
+
+        #endregion
+    }
+
     public static class CollectionExtensions
     {
         public static void DestroyAllGameObjectsAndClear<T>(this List<T> list) where T : Behaviour
         {
             foreach (T item in list)
             {
-                Object.Destroy(item.gameObject);
+                UnityObject.Destroy(item.gameObject);
             }
 
             list.Clear();
@@ -101,28 +264,41 @@ namespace BeardKit
         {
             for (var i = 0; i < array.Length; ++i)
             {
-                Object.Destroy(array[i].gameObject);
+                UnityObject.Destroy(array[i].gameObject);
                 array[i] = null;
             }
         }
 
-        public static void DestroyAllAndClear<T>(this List<T> list) where T : Object
+        public static void DestroyAllAndClear<T>(this List<T> list) where T : UnityObject
         {
             foreach (T item in list)
             {
-                Object.Destroy(item);
+                UnityObject.Destroy(item);
             }
 
             list.Clear();
         }
 
-        public static void DestroyAllAndClear<T>(this T[] array) where T : Object
+        public static void DestroyAllAndClear<T>(this T[] array) where T : UnityObject
         {
             for (var i = 0; i < array.Length; ++i)
             {
-                Object.Destroy(array[i]);
+                UnityObject.Destroy(array[i]);
                 array[i] = null;
             }
+        }
+
+        /// <summary>Casts a list to the type TResult.</summary>
+        /// <exception cref="System.InvalidCastException">Throws an exception if the cast is invalid</exception>
+        public static List<TResult> Cast<TResult>(this IList sourceList)
+        {
+            var resultList = new List<TResult>(sourceList.Count);
+            foreach (TResult item in sourceList)
+            {
+                resultList.Add(item);
+            }
+
+            return resultList;
         }
     }
 
@@ -175,7 +351,7 @@ namespace BeardKit
             return newVector;
         }
 
-        public static Vector2 Add(this Vector3 v, Vector3 w)
+        public static Vector3 Add(this Vector3 v, Vector3 w)
         {
             Vector3 newVector;
             newVector.x = v.x + w.x;
@@ -213,7 +389,7 @@ namespace BeardKit
             return newVector;
         }
 
-        public static Vector2 Subtract(this Vector3 v, Vector3 w)
+        public static Vector3 Subtract(this Vector3 v, Vector3 w)
         {
             Vector3 newVector;
             newVector.x = v.x - w.x;
