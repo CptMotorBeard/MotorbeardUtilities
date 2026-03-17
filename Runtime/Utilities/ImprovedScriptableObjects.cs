@@ -110,16 +110,26 @@ namespace BeardKit
 #if UNITY_EDITOR
         // Save all the assets when we enter playmode (Unity does not do this by default). When we exit playmode, we can unload
         // the scriptable object, which will reset the values back to what is saved to disk.
-
-        [InitializeOnEnterPlayMode]
-        private static void SaveAssets()
+        [InitializeOnLoad]
+        private static class PlayModeSaver
         {
-            AssetDatabase.SaveAssets();
+            static PlayModeSaver()
+            {
+                EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+            }
+
+            private static void OnPlayModeStateChanged(PlayModeStateChange state)
+            {
+                if (state == PlayModeStateChange.ExitingEditMode)
+                {
+                    AssetDatabase.SaveAssets();
+                }
+            }
         }
 
         private void OnPlayModeStateChanged(PlayModeStateChange state)
         {
-            if (state == PlayModeStateChange.ExitingEditMode)
+            if (state == PlayModeStateChange.ExitingPlayMode)
             {
                 Resources.UnloadAsset(this);
             }
